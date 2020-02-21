@@ -4,11 +4,12 @@ package proto;
 
 // CreateStreamRequest is sent to create a new stream.
 message CreateStreamRequest {
-    string subject           = 1; // Stream NATS subject
-    string name              = 2; // Stream name (unique per subject)
-    string group             = 3; // Partitions NATS subject amongst group members
-    int32  replicationFactor = 4; // Number of stream replicas
-    int32  partitions        = 5; // Number of stream partitions
+    string subject             = 1; // Stream NATS subject
+    string name                = 2; // Stream name (unique per subject)
+    string group               = 3; // Partitions NATS subject amongst group members
+    int32  replicationFactor   = 4; // Number of stream replicas
+    int32  partitions          = 5; // Number of stream partitions
+    uint64 autoDisableDuration = 6; // TODO
 }
 
 // CreateStreamResponse is sent by server after creating a stream.
@@ -101,6 +102,19 @@ message Message {
     string              ackInbox      = 8;  // NATS subject to publish acks to
     string              correlationId = 9;  // User-supplied value to correlate acks to publishes
     AckPolicy           ackPolicy     = 10; // Controls the behavior of acks
+}
+
+// TODO
+enum StreamEventType {
+    PAUSE  = 0;
+    RESUME = 1;
+}
+
+// TODO
+message StreamEvent {
+    string stream        = 1;
+    int32  partition     = 2;
+    StreamEventType type = 3;
 }
 
 // Ack represents an acknowledgement that a message was committed to a stream
