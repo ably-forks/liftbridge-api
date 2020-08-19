@@ -167,6 +167,8 @@ message PartitionMetadata {
     string           leader   = 2; // Broker id of the partition leader
     repeated string  replicas = 3; // Broker ids of the partition replicas
     repeated string  isr      = 4; // Broker ids of the in-sync replica set
+    bool             paused   = 5; // Is this partition paused?
+    bool             readonly = 6; // Is this partition read-only?
 }
 
 // AckPolicy controls the behavior of message acknowledgements.
